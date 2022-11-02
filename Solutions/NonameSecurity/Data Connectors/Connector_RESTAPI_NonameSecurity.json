@@ -12,21 +12,21 @@
     ],
     "sampleQueries": [
         {
-            "description" : "NonameAPISecurityAlert_CL",
-            "query": "NonameAPISecurityAlert_CL"
+            "description" : "Noname API Security Alerts",
+            "query": "NonameAPISecurityAlert_CL\n| where TimeGenerated >= ago(1d)\n"
         }
     ],
     "dataTypes": [
         {
-            "name": "NonameAPISecurityAlert",
-            "lastDataReceivedQuery": "NonameAPISecurityAlert"
+            "name": "NonameAPISecurityAlert_CL",
+            "lastDataReceivedQuery": "NonameAPISecurityAlert_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
     ],
     "connectivityCriterias": [
         {
             "type": "IsConnectedQuery",
             "value": [
-                "NonameAPISecurityAlert\n            | summarize LastLogReceived = max(TimeGenerated)\n            | project IsConnected = LastLogReceived > ago(30d)"
+                "NonameAPISecurityAlert_CL\n| summarize LastLogReceived = max(TimeGenerated)\n | project IsConnected = LastLogReceived > ago(1d)"
             ]
         }
     ],
@@ -66,8 +66,8 @@
     },
     "instructionSteps": [
         {
-            "title": "",
-            "description": "Configure the Sentinel workflow in the Noname workflow integrations settings.",
+            "title": "Configure the Noname Sentinel integration.  Find documentation at https://docs.nonamesecurity.com ",
+            "description": "Configure the Sentinel workflow in the Noname integrations settings.",
             "instructions": [
                 {
                     "parameters": {
